@@ -13,5 +13,6 @@ namespace memo2.Models
     {
         void ServiceOn();
         void ServiceOff();
+        bool CheckPermission();
     }
 }

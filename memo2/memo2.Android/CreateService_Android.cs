@@ -23,5 +23,16 @@ namespace memo2.Droid
         {
             Context.StopService(_intent);
         }
+
+        public bool CheckPermission()
+        {
+            return Android.Provider.Settings.CanDrawOverlays(Context);
+        }
+
+        //public void CallActionManageOverlayPermission()
+        //{
+        //    var intent = new Intent(Android.Provider.Settings.ActionManageOverlayPermission, Android.Net.Uri.Parse("package:" + Android.App.Application.Context.PackageName));
+        //    Android.Content.Context.StartActivity(intent);
+        //}
     }
 }

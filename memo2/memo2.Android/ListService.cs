@@ -332,10 +332,11 @@ namespace memo2.Droid
             // 権限確認？
             if (!Settings.CanDrawOverlays(this))
             {
-                var intent = new Intent(Settings.ActionManageOverlayPermission);
-                intent.SetPackage("package:" + PackageName);
+                var intent = new Intent(Settings.ActionManageOverlayPermission, Android.Net.Uri.Parse("package:" + Android.App.Application.Context.PackageName));
                 StartActivity(intent);
             }
+
+            // 権限が無い場合は何もしない
             if (!Settings.CanDrawOverlays(this))
             {
                 // 権限を許可してくれ～的なメッセージ

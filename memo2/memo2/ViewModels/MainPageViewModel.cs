@@ -17,6 +17,7 @@ namespace memo2.ViewModels
         private string _title;
         private bool _startup;
         private int _fontsizeindex;
+        private IPageDialogService _pageDialogService;
 
         /// <summary>ViewのContentPage Titleとバインドされています</summary>
         public new string Title
@@ -53,7 +54,7 @@ namespace memo2.ViewModels
         // いったんコメントアウト これが実行されない
         // ^> IDependencyService dependencyServiceすればいけるけど解せない
         // https://prismlibrary.com/docs/xamarin-forms/Dependency-Service.html
-        public MainPageViewModel(INavigationService navigationService, IDependencyService dependencyService)
+        public MainPageViewModel(IPageDialogService pageDialogService,INavigationService navigationService, IDependencyService dependencyService)
             : base(navigationService)
         {
             System.Diagnostics.Debug.WriteLine("(´・ω・｀)ViewModel  start");
@@ -64,7 +65,15 @@ namespace memo2.ViewModels
 
             this.Model.PropertyChanged += Model_PropertyChanged;
 
+            _pageDialogService = pageDialogService;
+
             Title = "通知メモ";
+
+            // _pageDialogService.DisplayAlertAsync("確認", "利用するには他のアプリの上に重ねて表示する権限を許可してください。", "はい");
+            //if (!ics.CheckPermission())
+            //{
+            //    _pageDialogService.DisplayAlertAsync("確認", "利用するには他のアプリの上に重ねて表示する権限を許可してください。", "はい");
+            //}
         }
 
         // これなら実行される
@@ -101,7 +110,7 @@ namespace memo2.ViewModels
         }
 
         /// <summary>
-        /// ControlPageへ遷移する際に実行されるメソッド
+        /// 遷移する際に実行されるメソッド
         /// </summary>
         /// <param name="parameters"></param>
         public void OnNavigatedTo(NavigationParameters parameters)

@@ -3,7 +3,7 @@
 	<uses-sdk android:minSdkVersion="23" android:targetSdkVersion="29" />
 	<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 	<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-	<application android:label="memo2.Android" android:icon="@mipmap/ic_launcher">
+	<application android:icon="@mipmap/ic_launcher" android:label="通知メモ">
 		<service android:name=".ListService"></service>
 	</application>
 </manifest>

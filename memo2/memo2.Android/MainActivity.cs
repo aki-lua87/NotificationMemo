@@ -9,7 +9,7 @@ using System;
 
 namespace memo2.Droid
 {
-    [Activity(Label = "memo2", Icon = "@mipmap/ic_launcher", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Label = "通知メモ", Icon = "@mipmap/ic_launcher", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)
@@ -23,12 +23,18 @@ namespace memo2.Droid
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             LoadApplication(new App(new AndroidInitializer()));
 
-            // 権限確認？ エラーになる
             if (!Settings.CanDrawOverlays(this))
             {
-                //var intent = new Intent(Settings.ActionManageOverlayPermission);
-                //intent.SetPackage(PackageName);
-                //StartActivityForResult(intent, 1234);
+                var dlg = new AlertDialog.Builder(this);
+                dlg.SetTitle("確認");
+                dlg.SetMessage("他のアプリの上に重ねて表示する許可をしてください。");
+                dlg.SetPositiveButton("はい", (sender, arg) =>
+                {
+                    // 権限確認
+                    var intent = new Intent(Settings.ActionManageOverlayPermission, Android.Net.Uri.Parse("package:" + Android.App.Application.Context.PackageName));
+                    StartActivity(intent);
+                });
+                dlg.Create().Show();
             }
         }
 
@@ -46,10 +52,6 @@ namespace memo2.Droid
         {
             // Register any platform specific implementations
         }
-        //public void RegisterTypes(IUnityContainer container)
-        //{
-
-        //}
     }
 }
 
