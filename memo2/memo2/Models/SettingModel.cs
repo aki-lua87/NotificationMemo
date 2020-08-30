@@ -14,7 +14,7 @@ namespace memo2.Models
     public class SettingModel : BindableBase
     {
         private bool _startup;
-        private string _font;
+        // private string _font;
 
         /// <summary>
         /// コンストラクタです。

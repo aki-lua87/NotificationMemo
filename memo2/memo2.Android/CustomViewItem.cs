@@ -7,7 +7,7 @@ namespace memo2.Droid
     /// </summary>
     class CustomViewItem
     {
-        internal Random rnd;
+        // internal Random rnd;
 
         public bool check { get; set; }
         public string memo { get; set; }

@@ -15,7 +15,7 @@ namespace memo2.ViewModels
         private MainPageModel Model { get; }
 
         private string _title;
-        private bool _startup;
+        // private bool _startup;
         private int _fontsizeindex;
         private IPageDialogService _pageDialogService;
 
@@ -25,18 +25,22 @@ namespace memo2.ViewModels
             get { return _title; }
             set { SetProperty(ref _title, value); }
         }
+
+        public DelegateCommand Start { get; private set; }
+        public DelegateCommand Stop { get; private set; }
         /// <summary>ViewのStartUpCheckとバインドされています</summary>
-        public bool StartUp
-        {
-            get { return _startup; }
-            set
-            {
-                // スイッチ変更時にModelに通知し通知状態を変更
-                SetProperty(ref _startup, value);
-                Model.StartUp = StartUp;
-                Model.StartUpTap();
-            }
-        }
+        //public bool StartUp
+        //{
+        //    get { return _startup; }
+        //    set
+        //    {
+        //        // スイッチ変更時にModelに通知し通知状態を変更
+        //        SetProperty(ref _startup, value);
+        //        Model.StartUp = StartUp;
+        //        Model.StartUpTap();
+        //    }
+        //}
+
         /// <summary>ViewのFontSizesのPickerとバインドされています</summary>
         public int FontSizeIndex
         {
@@ -68,6 +72,9 @@ namespace memo2.ViewModels
             _pageDialogService = pageDialogService;
 
             Title = "通知メモ";
+
+            Start = new DelegateCommand(() => Model.Start());
+            Stop = new DelegateCommand(() => Model.Stop());
 
             // _pageDialogService.DisplayAlertAsync("確認", "利用するには他のアプリの上に重ねて表示する権限を許可してください。", "はい");
             //if (!ics.CheckPermission())
@@ -124,7 +131,7 @@ namespace memo2.ViewModels
             // Jsonをロード
             Model.Load();
 
-            StartUp = Model.StartUp;
+            // StartUp = Model.StartUp;
             FontSizeIndex = Model.FontSizeIndex;
         }
 

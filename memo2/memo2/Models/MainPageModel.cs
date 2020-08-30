@@ -50,7 +50,7 @@ namespace memo2.Models
         /// <param name="sal">ISaveAndLoad　インターフェイス型</param>
         /// <param name="ins">INotificationOnAndOff　インターフェイス型</param>
         /// <param name="ics">ICreateService インターフェイス型</param>
-        public MainPageModel(ISaveAndLoad sal,INotificationOnAndOff ins,ICreateService ics)
+        public MainPageModel(ISaveAndLoad sal, INotificationOnAndOff ins, ICreateService ics)
         {
             SaveAndLoad = sal;
             NotificationService = ins;
@@ -63,7 +63,7 @@ namespace memo2.Models
         public void Save()
         {
             var data = JsonConvert.SerializeObject(_settingModel);
-            Debug.WriteLine("OutputJsonData = "+ data);
+            Debug.WriteLine("OutputJsonData = " + data);
             SaveAndLoad.SaveData(SaveFileName, data);
         }
         /// <summary>
@@ -80,7 +80,7 @@ namespace memo2.Models
                 this.StartUp = _settingModel.StartUp;
                 //this.FontSizeIndex = _intToSize.First(x => string.Equals(x.Value, _settingModel.Font, StringComparison.CurrentCultureIgnoreCase)).Key;
             }
-            catch 
+            catch
             {
                 Debug.WriteLine("Json作るよー(´・ω・｀)");
                 var data = JsonConvert.SerializeObject(new SettingModel(false, "Medium"));
@@ -102,17 +102,18 @@ namespace memo2.Models
         /// <summary>
         /// StartUpの設定値を変更し<see cref="_settingModel"/>に反映しJson形式で保存します。
         /// </summary>
-        public void StartUpTap()
+        public void Start()
         {
-            if (StartUp)
-            {
-                SettingOn();
-            }
-            else
-            {
-                SettingOff();
-            }
-            Debug.WriteLine("Model.StartUp => " + this.StartUp);
+            this.StartUp = true;
+            SettingOn();
+            _settingModel.StartUp = this.StartUp;
+            Save();
+        }
+
+        public void Stop()
+        {
+            this.StartUp = false;
+            SettingOff();
             _settingModel.StartUp = this.StartUp;
             Save();
         }
